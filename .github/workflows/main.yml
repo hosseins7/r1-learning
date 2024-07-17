@@ -2,11 +2,11 @@ name: Publish Docker Image to Docker Hub
 
 on:
   push:
-    branches: ['master']
+    branches: ['main']
 
 jobs:
   build:
-    runs-on: /r1-learning/
+    runs-on: ubuntu-latest
 
     steps:
       - uses: actions/checkout@v3
