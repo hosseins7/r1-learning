@@ -1,24 +1,26 @@
-# pull official base image
+# Dockerfile located in app directory
 FROM python:3.10-slim-buster
 
-# set work directory
+# Set work directory
 WORKDIR /usr/src/app
 
-# set environment variables
+# Set environment variables
 ENV PYTHONDONTWRITEBYTECODE 1
 ENV PYTHONUNBUFFERED 1
 
-# install mysql dependencies
-RUN apt-get update
-RUN apt-get install gcc default-libmysqlclient-dev -y
+# Install system dependencies
+RUN apt-get update \
+    && apt-get install -y gcc default-libmysqlclient-dev \
+    && apt-get clean
 
-# install dependencies
-RUN pip install -U pip setuptools wheel
-RUN pip install --upgrade pip
+# Upgrade pip and install dependencies
+RUN pip install --upgrade pip setuptools wheel
+
+# Copy requirements.txt and install dependencies
 COPY ./app/requirements.txt .
-RUN pip install -r ./app/requirements.txt . --no-cache-dir
+RUN pip install -r requirements.txt --no-cache-dir
 
-# copy project
+# Copy the rest of the application code
 COPY . .
 
 # Convert plain text files from Windows or Mac format to Unix
@@ -28,8 +30,8 @@ RUN dos2unix --newfile docker-entrypoint.sh /usr/local/bin/docker-entrypoint.sh
 # Make entrypoint executable
 RUN chmod +x /usr/local/bin/docker-entrypoint.sh
 
-# Entrypoint dependencies
+# Install netcat
 RUN apt-get install netcat -y
 
-# run entrypoint.sh
+# Define entrypoint
 ENTRYPOINT ["bash", "/usr/local/bin/docker-entrypoint.sh"]
