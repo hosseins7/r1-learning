@@ -20,7 +20,7 @@ jobs:
           password: ${{ secrets.DOCKER_PASSWORD }}
       
       - name: Build Docker image
-        run: docker build . --file app/Dockerfile --tag r1-learning
-      
+        run: docker build . --file app/Dockerfile --tag h7s91/r1-learning
+        
       - name: Push Docker image to Docker Hub
         run: docker push ${{ secrets.DOCKER_USERNAME }}/r1-learning
