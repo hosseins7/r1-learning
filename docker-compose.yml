@@ -16,16 +16,14 @@ services:
   web:
     container_name: django-web
     build:
-      context: ./app
+      context: .
       dockerfile: Dockerfile
     command: python manage.py runserver 0.0.0.0:8000
     volumes:
-      - ./app/:/usr/src/app/
+      - .:/usr/src/app/
     env_file:
       - ./.env
     ports:
       - 8000:8000
     depends_on:
-      - db
-    links:
       - db
