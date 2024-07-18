@@ -20,18 +20,18 @@ RUN pip install --upgrade pip setuptools wheel
 COPY ./app/requirements.txt .
 RUN pip install -r requirements.txt --no-cache-dir
 
-# Copy the rest of the application code
-COPY ./app .
-
 # Install netcat
-RUN apt-get install netcat -y
+RUN apt-get install -y netcat
+
+# Copy the entire application code into the Docker image
+COPY ./app /usr/src/app
 
 # Copy docker-entrypoint.sh and ensure it's in Unix format
-COPY ./app/docker-entrypoint.sh /usr/src/app/docker-entrypoint.sh
-RUN dos2unix /usr/src/app/docker-entrypoint.sh
+COPY ./app/docker-entrypoint.sh /usr/local/bin/docker-entrypoint.sh
+RUN dos2unix /usr/local/bin/docker-entrypoint.sh
 
 # Make entrypoint executable
-RUN chmod +x /usr/src/app/docker-entrypoint.sh
+RUN chmod +x /usr/local/bin/docker-entrypoint.sh
 
-# Define entrypoint
-ENTRYPOINT ["bash", "/usr/src/app/docker-entrypoint.sh"]
+# Set entrypoint
+ENTRYPOINT ["bash", "/usr/local/bin/docker-entrypoint.sh"]
