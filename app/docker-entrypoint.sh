@@ -14,6 +14,9 @@ fi
 # python manage.py flush --no-input
 
 echo "Appling database migrations..."
+COPY . /usr/src/app/
+WORKDIR /usr/src/app/
+
 python manage.py makemigrations 
 python manage.py migrate
 
