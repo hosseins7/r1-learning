@@ -26,6 +26,9 @@ RUN apt-get install -y netcat
 # Copy the entire application code into the Docker image
 COPY ./app /usr/src/app
 
+# Copy manage.py explicitly
+COPY ./app/manage.py /usr/src/app/manage.py
+
 # Copy docker-entrypoint.sh and ensure it's in Unix format
 COPY ./app/docker-entrypoint.sh /usr/local/bin/docker-entrypoint.sh
 RUN dos2unix /usr/local/bin/docker-entrypoint.sh
