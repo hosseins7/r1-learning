@@ -2,8 +2,8 @@
 FROM python:3.10-slim-buster
 
 # Set environment variables
-ENV PYTHONDONTWRITEBYTECODE=1
-ENV PYTHONUNBUFFERED=1
+ENV PYTHONDONTWRITEBYTECODE 1
+ENV PYTHONUNBUFFERED 1
 
 # Set work directory
 WORKDIR /usr/src/app
@@ -17,11 +17,11 @@ RUN apt-get update \
 RUN pip install --upgrade pip setuptools wheel
 
 # Copy requirements.txt and install dependencies
-COPY ./requirements.txt .
+COPY requirements.txt .
 RUN pip install -r requirements.txt --no-cache-dir
 
 # Copy docker-entrypoint.sh and ensure it's in Unix format
-COPY ./docker-entrypoint.sh /usr/local/bin/docker-entrypoint.sh
+COPY docker-entrypoint.sh /usr/local/bin/docker-entrypoint.sh
 RUN dos2unix /usr/local/bin/docker-entrypoint.sh
 
 # Make entrypoint executable
