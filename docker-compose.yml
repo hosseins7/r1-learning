@@ -16,14 +16,14 @@ services:
   web:
     container_name: django-web
     build:
-      context: .
+      context: ./app  # Adjust to point to the directory containing Dockerfile
       dockerfile: Dockerfile
     command: python manage.py runserver 0.0.0.0:8000
     volumes:
-      - .:/usr/src/app/
+      - .:/usr/src/app  # Ensure this matches your local directory structure
     env_file:
       - ./.env
     ports:
-      - 8000:8000
+      - "8000:8000"
     depends_on:
       - db
